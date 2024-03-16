@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "protbalancer",
+	"version": "${version}",
+	"name": "Protection Balancer",
+	"description": "Allows to add custom formulas for armor and protection damage handlers.",
+	"authors": [
+		"ElocinDev"
+	],
+	"contact": {
+		"homepage": "https://legacy.curseforge.com/minecraft/mc-mods/protbalancer"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"elocindev.protbalancer.ProtBalancer"
+		]
+	},
+	"mixins": [
+		"protbalancer.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.24",
+		"java": ">=17",
+		"fabric-api": "*",
+		"necronomicon": "*"
+	}
+}
