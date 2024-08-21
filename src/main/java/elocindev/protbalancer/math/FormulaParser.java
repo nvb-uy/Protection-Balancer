@@ -24,7 +24,7 @@ public class FormulaParser {
                 double parse() {
                     nextChar();
                     double x = parseExpression();
-                    if (pos < formula.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+                    if (pos < formula.length()) throw new RuntimeException("Unexpected: " + (char) ch+ "in formula: "+formula);
                     return x;
                 }
     
@@ -49,7 +49,7 @@ public class FormulaParser {
                 double parseFactor() {
                     if (eat('+')) return parseFactor();
                     if (eat('-')) return -parseFactor();
-    
+                
                     double x;
                     int startPos = pos;
                     if (eat('(')) {
@@ -58,8 +58,8 @@ public class FormulaParser {
                     } else if ((ch >= '0' && ch <= '9') || ch == '.') {
                         while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
                         x = Double.parseDouble(formula.substring(startPos, pos));
-                    } else if (ch >= 'a' && ch <= 'z') {
-                        while (ch >= 'a' && ch <= 'z') nextChar();
+                    } else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_') {
+                        while ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_') nextChar();
                         String func = formula.substring(startPos, pos);
                         if (func.equals("sqrt")) {
                             x = parseFactor();
@@ -102,9 +102,9 @@ public class FormulaParser {
                     } else {
                         throw new RuntimeException("Unexpected: " + (char) ch);
                     }
-    
+                
                     if (eat('^')) x = Math.pow(x, parseFactor());
-    
+                
                     return x;
                 }
             }.parse();
@@ -112,5 +112,5 @@ public class FormulaParser {
             ProtBalancer.LOGGER.error("Error parsing formula: " + formula);
             return 0;
         }
-    }    
+    }
 }
