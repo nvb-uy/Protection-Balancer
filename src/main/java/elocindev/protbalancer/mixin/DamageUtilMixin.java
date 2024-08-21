@@ -2,7 +2,6 @@ package elocindev.protbalancer.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 
@@ -19,8 +18,8 @@ public class DamageUtilMixin {
 
         if (ProtBalancer.CONFIG.enable_armor_formula && !formula.isEmpty()) {
             formula = formula.replace("DAMAGE", String.valueOf(damage));
-            formula = formula.replace("ARMOR", String.valueOf(armor));
             formula = formula.replace("ARMOR_TOUGHNESS", String.valueOf(armorToughness));
+            formula = formula.replace("ARMOR", String.valueOf(armor));
 
             return (float) (damage * (1.0F - FormulaParser.evaluateFormula(formula)));
         }
